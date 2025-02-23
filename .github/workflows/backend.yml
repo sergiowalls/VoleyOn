@@ -9,6 +9,7 @@ on:
     branches: [ "main" ]
     paths:
     - backend/**
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,6 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Start PostgreSQL
+      run: |
+        sudo systemctl start postgresql.service
+        sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
