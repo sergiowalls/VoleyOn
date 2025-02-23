@@ -8,6 +8,7 @@ djangorestframework = "*"
 uvicorn = "*"
 uvicorn-worker = "*"
 gunicorn = "*"
+psycopg = "*"
 
 [dev-packages]
 
