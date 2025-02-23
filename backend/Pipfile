@@ -9,6 +9,7 @@ uvicorn = "*"
 uvicorn-worker = "*"
 gunicorn = "*"
 psycopg = "*"
+whitenoise = "*"
 
 [dev-packages]
 
