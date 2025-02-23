@@ -13,5 +13,8 @@ whitenoise = "*"
 
 [dev-packages]
 
+[scripts]
+test = "python manage.py test"
+
 [requires]
 python_version = "3.13"
