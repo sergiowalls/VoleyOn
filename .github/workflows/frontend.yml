@@ -26,5 +26,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: ./frontend/.nvmrc
+      - run: npm ci
       - run: npm run lint
       - run: npm run build
