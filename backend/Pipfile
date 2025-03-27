@@ -10,11 +10,15 @@ uvicorn-worker = "*"
 gunicorn = "*"
 psycopg = "*"
 whitenoise = "*"
+pillow = "*"
 
 [dev-packages]
 
 [scripts]
 test = "python manage.py test"
+makemigrations = "python manage.py makemigrations api"
+migrate = "python manage.py migrate api"
+runserver = "python manage.py runserver"
 
 [requires]
 python_version = "3.13"
