@@ -7,13 +7,13 @@ import { CardMedia } from "@mui/material";
 import { TournamentDTO } from "./TournamentDTO.ts";
 
 
-export default function TournamentCard({title, description, imageUrl, link}: TournamentDTO) {
+export default function TournamentCard({name, poster, link}: TournamentDTO) {
     return (
         <Card sx={{maxWidth: 345}}>
-            <CardMedia component="img" alt="" height="140" image={imageUrl}/>
+            <CardMedia component="img" alt="" height="140" image={poster}/>
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">{title}</Typography>
-                <Typography variant="body2" sx={{color: 'text.secondary'}}>{description}</Typography>
+                <Typography gutterBottom variant="h5" component="div">{name}</Typography>
+                <Typography variant="body2" sx={{color: 'text.secondary'}}>Description</Typography>
             </CardContent>
             <CardActions>
                 {link && <Button size="small" href={link}>Me interesa</Button>}
