@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from api.models import Tournament
+from api.serializers import TournamentSerializer
+
+
+class TournamentsList(ListAPIView):
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer

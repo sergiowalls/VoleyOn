@@ -11,6 +11,7 @@ gunicorn = "*"
 psycopg = "*"
 whitenoise = "*"
 pillow = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
