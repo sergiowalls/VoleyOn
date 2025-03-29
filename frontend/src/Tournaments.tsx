@@ -17,13 +17,13 @@ const Tournaments = () => {
     }, []);
 
     return (
-        <Container maxWidth="lg" sx={{py: 3}}>
+        <Container maxWidth="xl" sx={{py: 3}}>
             {tournaments.length === 0 &&
                 <Typography variant="overline" gutterBottom>
                     Actualmente no hay torneos
                 </Typography>
             }
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
                 {tournaments.map((tournament) => (
                     <Grid size={{xs: 12, sm: 6, md: 4, lg: 3}} key={tournament.id}>
                         <TournamentCard {...tournament}></TournamentCard>

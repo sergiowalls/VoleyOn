@@ -3,9 +3,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CardMedia, Chip } from "@mui/material";
+import { CardMedia, Chip, Grid2 as Grid } from "@mui/material";
 import { TournamentDTO } from "./TournamentDTO.ts";
-import { Cake, Euro, Event, Group, SportsVolleyball, Wc } from "@mui/icons-material";
+import { Cake, Event, Group, Sell, SportsVolleyball, Wc } from "@mui/icons-material";
 
 const FIELDS: { [key: string]: string } = {
     Court: 'Pista',
@@ -38,17 +38,20 @@ export default function TournamentCard({
     const localeDate = new Date(Date.parse((date)!)).toLocaleDateString();
 
     return (
-        <Card sx={{maxWidth: 345}}>
-            <CardMedia component="img" alt="" height="140" image={poster}/>
+        <Card>
+            <CardMedia component="img" alt="" image={poster}/>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">{name}</Typography>
-                <Typography variant="body2" sx={{color: 'text.secondary'}}>{parsedLocation}</Typography>
-                {field && <Chip icon={<SportsVolleyball/>} label={translatedField} variant="outlined"/>}
-                {gender && <Chip icon={<Wc/>} label={translatedGender} variant="outlined"/>}
-                {players_on_field && <Chip icon={<Group/>} label={`${players_on_field}x${players_on_field}`} variant="outlined"/>}
-                {date && <Chip icon={<Event/>} label={localeDate} variant="outlined"/>}
-                <Chip icon={<Euro/>} label={`${price} € / persona`} variant="outlined"/>
-                {minimum_age && <Chip icon={<Cake/>} label={`Mayores de ${minimum_age} años`} variant="outlined"/>}
+                <Typography gutterBottom variant="body2" sx={{color: 'text.secondary'}}>{parsedLocation}</Typography>
+                <Grid container spacing={1}>
+                    {field && <Chip icon={<SportsVolleyball/>} label={translatedField} variant="outlined"/>}
+                    {gender && <Chip icon={<Wc/>} label={translatedGender} variant="outlined"/>}
+                    {players_on_field &&
+                        <Chip icon={<Group/>} label={`${players_on_field}x${players_on_field}`} variant="outlined"/>}
+                    {date && <Chip icon={<Event/>} label={localeDate} variant="outlined"/>}
+                    <Chip icon={<Sell/>} label={`${price}€/persona`} variant="outlined"/>
+                    {minimum_age && <Chip icon={<Cake/>} label={`Mayores de ${minimum_age} años`} variant="outlined"/>}
+                </Grid>
             </CardContent>
             <CardActions>
                 {link && <Button size="small" href={link}>Me interesa</Button>}
