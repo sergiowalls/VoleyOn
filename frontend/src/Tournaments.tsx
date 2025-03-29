@@ -26,8 +26,7 @@ const Tournaments = () => {
             <Grid container spacing={2}>
                 {tournaments.map((tournament) => (
                     <Grid size={{xs: 12, sm: 6, md: 4, lg: 3}} key={tournament.id}>
-                        <TournamentCard id={tournament.id} name={tournament.name} poster={tournament.poster}
-                                        link={tournament.link}></TournamentCard>
+                        <TournamentCard {...tournament}></TournamentCard>
                     </Grid>
                 ))}
             </Grid>
