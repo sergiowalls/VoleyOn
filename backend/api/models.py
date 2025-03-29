@@ -25,10 +25,10 @@ class Tournament(models.Model):
     field = models.CharField(choices=Field, null=True)
     gender = models.CharField(choices=Gender, null=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
-    playersOnField = models.IntegerField(null=True)
+    players_on_field = models.IntegerField(null=True)
     date = models.DateField(null=True)
     price = models.FloatField(null=True)
-    minimumAge = models.IntegerField(null=True)
+    minimum_age = models.IntegerField(null=True)
     link = models.URLField(null=True)
     poster = models.URLField(null=True)
 
