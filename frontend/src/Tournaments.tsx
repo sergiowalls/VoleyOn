@@ -38,8 +38,13 @@ const Tournaments = () => {
     const [maximumPrice, setMaximumPrice] = useState('');
     const [minimumAge, setMinimumAge] = useState('');
 
+    const [ordering, setOrdering] = useState('date');
+
     useEffect(() => {
         let query = '?';
+        if (ordering) {
+            query += `&ordering=${ordering}`;
+        }
         if (province) {
             query += `&location__province=${province}`;
         }
@@ -69,7 +74,7 @@ const Tournaments = () => {
             .then((response) => response.json())
             .finally(() => setLoading(false))
             .then((tournaments: TournamentDTO[]) => setTournaments(tournaments));
-    }, [province, field, gender, playersOnField, startDate, endDate, maximumPrice, minimumAge]);
+    }, [ordering, province, field, gender, playersOnField, startDate, endDate, maximumPrice, minimumAge]);
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -171,6 +176,21 @@ const Tournaments = () => {
         </Grid>
     </Grid>;
 
+    const sorting = <FormControl fullWidth sx={{mt: 1}}>
+        <InputLabel id="ordering-label">Orden</InputLabel>
+        <Select
+            labelId="ordering-label"
+            id="ordering-select"
+            value={ordering}
+            label="Género"
+            autoWidth
+            onChange={(event: SelectChangeEvent) => setOrdering(event.target.value as string)}
+        >
+            <MenuItem value={'date'}>Más antiguos primero</MenuItem>
+            <MenuItem value={'-date'}>Más lejanos primero</MenuItem>
+        </Select>
+    </FormControl>;
+
     return (
         <Container maxWidth="xl" sx={{py: 3}}>
             <Drawer
@@ -188,6 +208,7 @@ const Tournaments = () => {
                         Filtros
                     </Typography>
                     {filters}
+                    {sorting}
                     <Box sx={{textAlign: 'end'}}>
                         <Button onClick={toggleDrawer(false)} variant="contained" sx={{mt: 1}}>
                             {tournaments.length === 0 ? 'No hay torneos' : `Mostrar ${tournaments.length} torneo${tournaments.length > 1 ? 's' : ''}`}
@@ -202,8 +223,8 @@ const Tournaments = () => {
             </Box>
 
 
-            <Grid container sx={{mb: 1}}>
-                <Grid size="grow">
+            <Grid container spacing={1} sx={{mb: 1, alignItems: "center", justifyContent: { xs: "center"}}}>
+                <Grid size={{xs: 12, sm: 'grow'}}>
                     {
                         loading &&
                         <Typography variant="h6">
@@ -223,9 +244,12 @@ const Tournaments = () => {
                         </Typography>
                     }
                 </Grid>
-                <Grid>
-                    <Button sx={{display: {md: 'none'}}} onClick={toggleDrawer(true)} variant="outlined"
-                            startIcon={<Tune/>}>Filtrar</Button>
+                <Grid size={{xs: "auto"}} sx={{display: {md: 'none'}}} >
+                    <Button onClick={toggleDrawer(true)} variant="outlined"
+                            size="large" startIcon={<Tune/>}>Filtrar</Button>
+                </Grid>
+                <Grid size={{md: 'auto'}} sx={{display: {xs: 'none', md: "block"}}}>
+                    {sorting}
                 </Grid>
             </Grid>
 
