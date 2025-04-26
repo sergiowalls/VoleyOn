@@ -6,13 +6,18 @@ import 'dayjs/locale/es';
 import './App.css'
 import Menu from "./Menu.tsx";
 import Tournaments from "./Tournaments.tsx";
+import About from "./About.tsx";
+import { Route, Routes } from "react-router";
 
 function App() {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es"
                               localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}>
             <Menu/>
-            <Tournaments/>
+            <Routes>
+                <Route path="/" element={<Tournaments/>}/>
+                <Route path="/about" element={<About/>}/>
+            </Routes>
         </LocalizationProvider>
     )
 }

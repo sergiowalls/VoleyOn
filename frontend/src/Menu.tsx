@@ -13,9 +13,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { SportsVolleyball } from "@mui/icons-material";
+import { Link } from "react-router";
 
 const drawerWidth = 240;
-const navItems = ['Torneos', 'Acerca de'];
+const navItems = [{label: 'Torneos', path: '/'}, {label: 'Acerca de', path: '/about'}];
 
 export default function Menu() {
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -25,16 +26,16 @@ export default function Menu() {
     };
 
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
+        <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
+            <Typography variant="h6" sx={{my: 2}}>
                 VoleyOn
             </Typography>
-            <Divider />
+            <Divider/>
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
+                    <ListItem key={item.label} disablePadding>
+                        <ListItemButton sx={{textAlign: 'center'}} component={Link} to={item.path}>
+                            <ListItemText primary={item.label}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -43,7 +44,7 @@ export default function Menu() {
     );
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{display: 'flex'}}>
             <AppBar component="nav" position="static" sx={{minHeight: '64px', justifyContent: 'center'}}>
                 <Toolbar>
                     <IconButton
@@ -51,11 +52,11 @@ export default function Menu() {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{mr: 2, display: {sm: 'none'}}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <SportsVolleyball sx={{ display: 'flex', mr: 1 }} />
+                    <SportsVolleyball sx={{display: 'flex', mr: 1}}/>
                     <Typography
                         variant="h6"
                         noWrap
@@ -72,10 +73,10 @@ export default function Menu() {
                         VoleyOn
                     </Typography>
 
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
+                            <Button key={item.label} sx={{color: '#fff'}} component={Link} to={item.path}>
+                                {item.label}
                             </Button>
                         ))}
                     </Box>
@@ -90,8 +91,8 @@ export default function Menu() {
                         keepMounted: true,
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        display: {xs: 'block', sm: 'none'},
+                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
                     }}
                 >
                     {drawer}
