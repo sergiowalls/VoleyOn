@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import { Dayjs } from "dayjs";
 import { Provinces } from "./Provinces.ts";
 import { Tune } from "@mui/icons-material";
+import dayjs from 'dayjs'
 
 const API_URL = import.meta.env.VITE_VOLEYON_API_URL;
 
@@ -32,7 +33,7 @@ const Tournaments = () => {
     const [field, setField] = useState('');
     const [gender, setGender] = useState('');
     const [playersOnField, setPlayersOnField] = useState('');
-    const [startDate, setStartDate] = useState<Dayjs | null>(null);
+    const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
     const [endDate, setEndDate] = useState<Dayjs | null>(null);
     const [maximumPrice, setMaximumPrice] = useState('');
     const [minimumAge, setMinimumAge] = useState('');
@@ -212,7 +213,7 @@ const Tournaments = () => {
                     {
                         !loading && tournaments.length === 0 &&
                         <Typography variant="h6">
-                            Actualmente no hay torneos
+                            No se han encontrado torneos
                         </Typography>
                     }
                     {
