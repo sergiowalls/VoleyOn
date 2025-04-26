@@ -182,14 +182,16 @@ const Tournaments = () => {
                     },
                 }}
             >
-                <Box sx={{px: 1, py: 1, textAlign: 'end'}}>
-                    <Typography align="center">
+                <Box sx={{px: 1, py: 1}}>
+                    <Typography align="center" gutterBottom>
                         Filtros
                     </Typography>
                     {filters}
-                    <Button onClick={toggleDrawer(false)} variant="contained" sx={{mt: 1}}>
-                        {tournaments.length === 0 ? 'No hay torneos' : `Mostrar ${tournaments.length} torneo${tournaments.length > 1 ? 's' : ''}`}
-                    </Button>
+                    <Box sx={{textAlign: 'end'}}>
+                        <Button onClick={toggleDrawer(false)} variant="contained" sx={{mt: 1}}>
+                            {tournaments.length === 0 ? 'No hay torneos' : `Mostrar ${tournaments.length} torneo${tournaments.length > 1 ? 's' : ''}`}
+                        </Button>
+                    </Box>
                 </Box>
             </Drawer>
 
