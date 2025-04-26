@@ -134,7 +134,7 @@ const Tournaments = () => {
                 value={startDate}
                 slotProps={{textField: {fullWidth: true}, field: {clearable: true}}}
                 onChange={(newStartDate) => {
-                    if (newStartDate!.isValid()) setStartDate(newStartDate);
+                    if (!newStartDate || newStartDate.isValid()) setStartDate(newStartDate);
                 }}
             />
         </Grid>
@@ -144,7 +144,7 @@ const Tournaments = () => {
                 value={endDate}
                 slotProps={{textField: {fullWidth: true}, field: {clearable: true}}}
                 onChange={(newEndDate) => {
-                    if (newEndDate!.isValid()) setEndDate(newEndDate);
+                    if (!newEndDate || newEndDate.isValid()) setEndDate(newEndDate);
                 }}
             />
         </Grid>
