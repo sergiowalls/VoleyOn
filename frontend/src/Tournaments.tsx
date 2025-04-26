@@ -150,7 +150,7 @@ const Tournaments = () => {
             />
         </Grid>
         <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
-            <TextField id="maximum-price-input" label="Precio màximo" variant="outlined" fullWidth type="number"
+            <TextField id="maximum-price-input" label="Precio máximo" variant="outlined" fullWidth type="number"
                        onChange={(event: ChangeEvent<HTMLInputElement>) => setMaximumPrice(event.target.value as string)}
                        slotProps={{
                            input: {
