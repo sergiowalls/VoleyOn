@@ -68,7 +68,7 @@ const Tournaments = () => {
     return (
         <Container maxWidth="xl" sx={{py: 3}}>
             <Grid container spacing={1} sx={{pb: 3}}>
-                <Grid size={{xs: 6, sm: 6, md: 3, xl: 2}}>
+                <Grid size={{xs: 6, md: 3, xl: 2}}>
                     <Autocomplete renderInput={(params) => (
                         <TextField
                             {...params}
@@ -81,7 +81,7 @@ const Tournaments = () => {
                         />
                     )} options={Provinces} onChange={(_event, newValue) => setProvince(newValue as string)}/>
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 3, xl: 1}}>
+                <Grid size={{xs: 6, md: 3, xl: 1}}>
                     <FormControl fullWidth>
                         <InputLabel id="field-label">Terreno</InputLabel>
                         <Select
@@ -91,13 +91,14 @@ const Tournaments = () => {
                             label="Terreno"
                             onChange={(event: SelectChangeEvent) => setField(event.target.value as string)}
                         >
+                            <MenuItem value={''}>Todos</MenuItem>
                             <MenuItem value={'Court'}>Pista</MenuItem>
                             <MenuItem value={'Beach'}>Playa</MenuItem>
                             <MenuItem value={'Snow'}>Nieve</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 3, xl: 2}}>
+                <Grid size={{xs: 6, md: 3, xl: 2}}>
                     <FormControl fullWidth>
                         <InputLabel id="gender-label">Género</InputLabel>
                         <Select
@@ -108,17 +109,19 @@ const Tournaments = () => {
                             autoWidth
                             onChange={(event: SelectChangeEvent) => setGender(event.target.value as string)}
                         >
+                            <MenuItem value={''}>Todos</MenuItem>
                             <MenuItem value={'Male'}>Masculino</MenuItem>
                             <MenuItem value={'Female'}>Femenino</MenuItem>
                             <MenuItem value={'Mixed'}>Mixto</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 3, xl: 2}}>
+                <Grid size={{xs: 6, md: 3, xl: 2}}>
                     <TextField id="number-of-players-input" label="Número de jugadores" variant="outlined" fullWidth
+                               type="number"
                                onChange={(event: ChangeEvent<HTMLInputElement>) => setPlayersOnField(event.target.value as string)}/>
                 </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 6, lg: 3, xl: 2}}>
+                <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
                     <DatePicker
                         label="Desde"
                         value={startDate}
@@ -128,7 +131,7 @@ const Tournaments = () => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 6, lg: 3, xl: 2}}>
+                <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
                     <DatePicker
                         label="Hasta"
                         value={endDate}
@@ -138,8 +141,8 @@ const Tournaments = () => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, md: 6, lg: 3, xl: 2}}>
-                    <TextField id="maximum-price-input" label="Precio màximo" variant="outlined" fullWidth
+                <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
+                    <TextField id="maximum-price-input" label="Precio màximo" variant="outlined" fullWidth type="number"
                                onChange={(event: ChangeEvent<HTMLInputElement>) => setMaximumPrice(event.target.value as string)}
                                slotProps={{
                                    input: {
@@ -148,8 +151,8 @@ const Tournaments = () => {
                                }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, md: 6, lg: 3, xl: 2}}>
-                    <TextField id="minimum-age-input" label="Mayores de" variant="outlined" fullWidth
+                <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
+                    <TextField id="minimum-age-input" label="Mayores de" variant="outlined" fullWidth type="number"
                                onChange={(event: ChangeEvent<HTMLInputElement>) => setMinimumAge(event.target.value as string)}
                                slotProps={{
                                    input: {
