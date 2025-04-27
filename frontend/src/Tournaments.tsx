@@ -35,7 +35,7 @@ const Tournaments = () => {
     const [field, setField] = useLocalStorage('field', '');
     const [gender, setGender] = useLocalStorage('gender', '');
     const [playersOnField, setPlayersOnField] = useLocalStorage('playersOnField', '');
-    const [startDate, setStartDate] = useLocalStorage<Dayjs | null>('startDate', null);
+    const [startDate, setStartDate] = useLocalStorage<Dayjs | null>('startDate', dayjs());
     const [endDate, setEndDate] = useLocalStorage<Dayjs | null>('endDate', null);
     const [maximumPrice, setMaximumPrice] = useLocalStorage('maximumPrice', '');
     const [minimumAge, setMinimumAge] = useLocalStorage('minimumAge', '');
