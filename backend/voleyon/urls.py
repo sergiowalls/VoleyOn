@@ -27,3 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tournaments/', views.TournamentsList.as_view()),
 ]
+
+admin.site.site_title = "VoleyOn admin"
+admin.site.site_header = "VoleyOn admin"
+admin.site.index_title = "Administración"
