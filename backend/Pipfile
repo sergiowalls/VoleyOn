@@ -8,10 +8,10 @@ djangorestframework = "*"
 uvicorn = "*"
 uvicorn-worker = "*"
 gunicorn = "*"
-psycopg = "*"
 whitenoise = "*"
 django-cors-headers = "*"
 django-filter = "*"
+psycopg = {extras = ["pool", "binary"], version = "*"}
 
 [dev-packages]
 
