@@ -40,7 +40,7 @@ const Tournaments = () => {
     const [maximumPrice, setMaximumPrice] = useLocalStorage('maximumPrice', '');
     const [minimumAge, setMinimumAge] = useLocalStorage('minimumAge', '');
 
-    const [ordering, setOrdering] = useState('date');
+    const [ordering, setOrdering] = useLocalStorage('ordering', 'date');
 
     useEffect(() => {
         let query = '?';
