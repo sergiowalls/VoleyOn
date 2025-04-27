@@ -3,11 +3,12 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CardMedia, Chip, Grid2 as Grid, Skeleton } from "@mui/material";
+import { Alert, CardMedia, Chip, Grid2 as Grid, Skeleton } from "@mui/material";
 import { TournamentDTO } from "./TournamentDTO.ts";
 import { Cake, Event, Group, Sell, SportsVolleyball, Wc } from "@mui/icons-material";
 import { Link } from "react-router";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 const FIELDS: { [key: string]: string } = {
     Court: 'Pista',
@@ -38,11 +39,17 @@ export default function TournamentCard({
     const parsedLocation = `${location.name}, ${location.address}, ${location.postal_code} ${location.city}, ${location.province}`;
     const translatedField = field && FIELDS[field];
     const translatedGender = gender && GENDERS[gender];
+    const isPastTournament = dayjs(date).isBefore(dayjs(), 'day');
     const localeDate = new Date(Date.parse((date)!)).toLocaleDateString();
 
     return (
         <>
             <Card sx={imageLoaded ? {} : {display: "none"}}>
+                {isPastTournament &&
+                    <Alert variant="filled" severity="warning" sx={{borderRadius: 0}}>
+                        Este torneo ya ha ocurrido.
+                    </Alert>
+                }
                 <CardMedia component="img" alt="" image={poster} onLoad={() => setImageLoaded(true)}
                            onError={() => setImageLoaded(true)}/>
                 <CardContent>
