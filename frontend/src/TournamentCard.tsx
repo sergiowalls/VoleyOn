@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { CardMedia, Chip, Grid2 as Grid } from "@mui/material";
 import { TournamentDTO } from "./TournamentDTO.ts";
 import { Cake, Event, Group, Sell, SportsVolleyball, Wc } from "@mui/icons-material";
+import { Link } from "react-router";
 
 const FIELDS: { [key: string]: string } = {
     Court: 'Pista',
@@ -54,7 +55,8 @@ export default function TournamentCard({
                 </Grid>
             </CardContent>
             <CardActions>
-                {link && <Button size="small" href={link}>Me interesa</Button>}
+                {link && <Button size="small" component={Link} to={link} target="_blank" rel="noopener noreferrer">Me
+                    interesa</Button>}
             </CardActions>
         </Card>
     );
