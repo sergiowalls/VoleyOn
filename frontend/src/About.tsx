@@ -12,6 +12,11 @@ export default function About() {
                 href="https://github.com/sergiowalls/VoleyOn" target="_blank"
                 rel="noopener">github.com/sergiowalls/VoleyOn</Link> .
             </Typography>
+            <br/>
+            <Typography variant="body1">
+                VoleyOn no se hace responsable de la información contenida en esta aplicación. La información sobre los
+                torneos puede estar incompleta o desactualizada.
+            </Typography>
         </Container>
     );
 }
