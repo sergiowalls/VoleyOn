@@ -1,9 +1,11 @@
 import TournamentCard from "./TournamentCard.tsx";
 import Grid from '@mui/material/Grid2';
 import {
-    Autocomplete, Box,
+    Autocomplete,
+    Box,
     Button,
-    Container, Divider,
+    Container,
+    Divider,
     Drawer,
     FormControl,
     InputAdornment,
@@ -17,10 +19,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ChangeEvent, useEffect, useState } from "react";
 import { TournamentDTO } from "./TournamentDTO.ts";
 import Typography from "@mui/material/Typography";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import { Provinces } from "./Provinces.ts";
 import { Tune } from "@mui/icons-material";
-import dayjs from 'dayjs'
+import { useLocalStorage } from "./useLocalStorage.ts";
 
 const API_URL = import.meta.env.VITE_VOLEYON_API_URL;
 
@@ -29,14 +31,14 @@ const Tournaments = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [open, setOpen] = useState(false);
 
-    const [province, setProvince] = useState('');
-    const [field, setField] = useState('');
-    const [gender, setGender] = useState('');
-    const [playersOnField, setPlayersOnField] = useState('');
-    const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
-    const [endDate, setEndDate] = useState<Dayjs | null>(null);
-    const [maximumPrice, setMaximumPrice] = useState('');
-    const [minimumAge, setMinimumAge] = useState('');
+    const [province, setProvince] = useLocalStorage('province', '');
+    const [field, setField] = useLocalStorage('field', '');
+    const [gender, setGender] = useLocalStorage('gender', '');
+    const [playersOnField, setPlayersOnField] = useLocalStorage('playersOnField', '');
+    const [startDate, setStartDate] = useLocalStorage<Dayjs | null>('startDate', null);
+    const [endDate, setEndDate] = useLocalStorage<Dayjs | null>('endDate', null);
+    const [maximumPrice, setMaximumPrice] = useLocalStorage('maximumPrice', '');
+    const [minimumAge, setMinimumAge] = useLocalStorage('minimumAge', '');
 
     const [ordering, setOrdering] = useState('date');
 
@@ -92,7 +94,8 @@ const Tournaments = () => {
                         },
                     }}
                 />
-            )} options={Provinces} onChange={(_event, newValue) => setProvince(newValue as string)}/>
+            )} options={Provinces} value={province}
+                          onChange={(_event, newValue) => setProvince(newValue as string)}/>
         </Grid>
         <Grid size={{xs: 6, md: 3, xl: 1}}>
             <FormControl fullWidth>
@@ -139,9 +142,7 @@ const Tournaments = () => {
                 label="Desde"
                 value={startDate}
                 slotProps={{textField: {fullWidth: true}, field: {clearable: true}}}
-                onChange={(newStartDate) => {
-                    if (!newStartDate || newStartDate.isValid()) setStartDate(newStartDate);
-                }}
+                onChange={(newStartDate) => setStartDate(newStartDate?.isValid() ? dayjs(newStartDate) : null)}
             />
         </Grid>
         <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
@@ -149,9 +150,7 @@ const Tournaments = () => {
                 label="Hasta"
                 value={endDate}
                 slotProps={{textField: {fullWidth: true}, field: {clearable: true}}}
-                onChange={(newEndDate) => {
-                    if (!newEndDate || newEndDate.isValid()) setEndDate(newEndDate);
-                }}
+                onChange={(newEndDate) => setEndDate(newEndDate?.isValid() ? dayjs(newEndDate) : null)}
             />
         </Grid>
         <Grid size={{xs: 12, sm: 6, lg: 3, xl: 2}}>
