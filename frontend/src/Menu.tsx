@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import { SportsVolleyball } from "@mui/icons-material";
 import { Link } from "react-router";
 
+const APP_NAME = "VoleyOn";
 const drawerWidth = 240;
 const navItems = [{label: 'Torneos', path: '/'}, {label: 'Acerca de', path: '/about'}];
 
@@ -27,9 +28,7 @@ export default function Menu() {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-            <Typography variant="h6" sx={{my: 2}}>
-                VoleyOn
-            </Typography>
+            <Typography variant="h6" sx={{my: 2}}>{APP_NAME}</Typography>
             <Divider/>
             <List>
                 {navItems.map((item) => (
@@ -56,24 +55,12 @@ export default function Menu() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <SportsVolleyball sx={{display: 'flex', mr: 1}}/>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        sx={{
-                            mr: 2,
-                            display: 'flex',
-                            flexGrow: 1,
-                            fontWeight: 700,
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        VoleyOn
-                    </Typography>
-
-                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                    <Link to={'/'}
+                          style={{color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center'}}>
+                        <SportsVolleyball sx={{mr: 1}}/>
+                        <Typography variant="h6" noWrap sx={{mr: 2, fontWeight: 700}}>{APP_NAME}</Typography>
+                    </Link>
+                    <Box sx={{display: {xs: 'none', sm: 'flex'}, flexGrow: 1, justifyContent: 'flex-end'}}>
                         {navItems.map((item) => (
                             <Button key={item.label} sx={{color: '#fff'}} component={Link} to={item.path}>
                                 {item.label}
