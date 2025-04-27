@@ -223,7 +223,7 @@ const Tournaments = () => {
             </Box>
 
 
-            <Grid container spacing={1} sx={{mb: 1, alignItems: "center", justifyContent: { xs: "center"}}}>
+            <Grid container spacing={1} sx={{mb: 1, alignItems: "center", justifyContent: {xs: "center"}}}>
                 <Grid size={{xs: 12, sm: 'grow'}}>
                     {
                         loading &&
@@ -244,9 +244,11 @@ const Tournaments = () => {
                         </Typography>
                     }
                 </Grid>
-                <Grid size={{xs: "auto"}} sx={{display: {md: 'none'}}} >
-                    <Button onClick={toggleDrawer(true)} variant="outlined"
-                            size="large" startIcon={<Tune/>}>Filtrar</Button>
+                <Grid size={{xs: "auto"}} sx={{display: {md: 'none'}}}>
+                    {
+                        !loading && <Button onClick={toggleDrawer(true)} variant="outlined" size="large"
+                                            startIcon={<Tune/>}>Filtrar</Button>
+                    }
                 </Grid>
                 <Grid size={{md: 'auto'}} sx={{display: {xs: 'none', md: "block"}}}>
                     {sorting}
