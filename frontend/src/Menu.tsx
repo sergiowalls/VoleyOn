@@ -17,7 +17,7 @@ import { Link } from "react-router";
 
 const APP_NAME = "VoleyOn";
 const drawerWidth = 240;
-const navItems = [{label: 'Torneos', path: '/'}, {label: 'Acerca de', path: '/about'}];
+const navItems = [{label: 'Torneos', path: '/torneos'}, {label: 'Acerca de', path: '/acerca-de'}];
 
 export default function Menu() {
     const [mobileOpen, setMobileOpen] = React.useState(false);

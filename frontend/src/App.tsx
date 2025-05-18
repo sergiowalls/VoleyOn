@@ -7,6 +7,7 @@ import './App.css'
 import Menu from "./Menu.tsx";
 import Tournaments from "./Tournaments.tsx";
 import About from "./About.tsx";
+import Home from "./Home.tsx";
 import { Route, Routes } from "react-router";
 
 function App() {
@@ -15,8 +16,9 @@ function App() {
                               localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}>
             <Menu/>
             <Routes>
-                <Route path="/" element={<Tournaments/>}/>
-                <Route path="/about" element={<About/>}/>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/torneos" element={<Tournaments/>}/>
+                <Route path="/acerca-ce" element={<About/>}/>
             </Routes>
         </LocalizationProvider>
     )
