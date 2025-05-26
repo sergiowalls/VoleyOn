@@ -24,8 +24,10 @@ export default function Home() {
                         type="image/webp"/>
                 <source media="(max-width: 660px)" srcSet="VoleyOn-mobile.jpg"
                         type="image/jpeg"/>
+                <source srcSet="VoleyOn.webp"
+                        type="image/webp"/>
                 <img src="VoleyOn.jpg" alt="Imagen promocional"
-                     style={{position: 'relative', left: '50%', transform: 'translate(-50%,0)', maxHeight: '30vh'}} />
+                     style={{position: 'relative', left: '50%', transform: 'translate(-50%,0)', height: '330px'}} />
             </picture>
             <Container>
                 <Grid container spacing={2} sx={{padding: 2}} justifyContent="center">
