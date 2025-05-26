@@ -20,6 +20,8 @@ export default function Home() {
     return (
         <>
             <picture style={{overflow: 'hidden', textAlign: 'center', display: 'flex'}}>
+                <source media="(max-width: 660px)" srcSet="VoleyOn-mobile.webp"
+                        type="image/webp"/>
                 <source media="(max-width: 660px)" srcSet="VoleyOn-mobile.jpg"
                         type="image/jpeg"/>
                 <img src="VoleyOn.jpg" alt="Imagen promocional"
