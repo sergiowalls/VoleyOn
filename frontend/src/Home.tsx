@@ -19,7 +19,12 @@ export default function Home() {
 
     return (
         <>
-            <img src="volley.jpeg" alt="Logo" style={{width: '100%', height: 'auto'}}/>
+            <picture style={{overflow: 'hidden', textAlign: 'center', display: 'flex'}}>
+                <source media="(max-width: 660px)" srcSet="VoleyOn-mobile.jpg"
+                        type="image/jpeg"/>
+                <img src="VoleyOn.jpg" alt="Imagen promocional"
+                     style={{position: 'relative', left: '50%', transform: 'translate(-50%,0)', maxHeight: '30vh'}} />
+            </picture>
             <Container>
                 <Grid container spacing={2} sx={{padding: 2}} justifyContent="center">
                     <Typography variant="body1" sx={{display: 'block', lineHeight: '2'}}>
