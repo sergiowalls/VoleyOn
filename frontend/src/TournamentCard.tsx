@@ -46,7 +46,7 @@ export default function TournamentCard({
         <>
             <Card sx={imageLoaded ? {} : {display: "none"}}>
                 {isPastTournament &&
-                    <Alert variant="filled" severity="warning" sx={{borderRadius: 0}}>
+                    <Alert variant="filled" severity="warning" sx={{borderRadius: 0, backgroundColor: "darkred"}}>
                         Este torneo ya ha ocurrido.
                     </Alert>
                 }
