@@ -18,7 +18,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/torneos" element={<Tournaments/>}/>
-                <Route path="/acerca-ce" element={<About/>}/>
+                <Route path="/acerca-de" element={<About/>}/>
             </Routes>
         </LocalizationProvider>
     )
