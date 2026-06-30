@@ -14,7 +14,7 @@ terraform {
     }
     bucket = "voleyon-tf-state"
     key    = "frontend/terraform.tfstate"
-    region = "us-east-1"
+    region = "us-east-1" # required by the S3 backend; DO Spaces ignores this value
 
     skip_credentials_validation = true
     skip_requesting_account_id  = true
