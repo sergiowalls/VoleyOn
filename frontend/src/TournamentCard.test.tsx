@@ -21,8 +21,8 @@ const baseTournament: TournamentDTO = {
         name: 'Club Deportivo',
         address: 'Calle Principal 1',
         postal_code: 28001,
-        city: 'Madrid',
-        province: 'Madrid',
+        city: 1,
+        province: 1,
     },
 };
 

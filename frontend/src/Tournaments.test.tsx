@@ -20,8 +20,8 @@ const mockTournaments: TournamentDTO[] = [
             name: 'Club Deportivo',
             address: 'Calle Mar 1',
             postal_code: 8001,
-            city: 'Barcelona',
-            province: 'Barcelona',
+            city: 1,
+            province: 1,
         },
     },
     {
@@ -38,8 +38,8 @@ const mockTournaments: TournamentDTO[] = [
             name: 'Pabellon',
             address: 'Calle Centro 5',
             postal_code: 28001,
-            city: 'Madrid',
-            province: 'Madrid',
+            city: 2,
+            province: 2,
         },
     },
 ];
