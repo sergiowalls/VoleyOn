@@ -14,3 +14,15 @@ variable "region" {
   type        = string
   default     = "lon1"
 }
+
+variable "frontend_source_dir" {
+  description = "Repository path to the frontend source"
+  type        = string
+  default     = "frontend"
+}
+
+variable "frontend_build_command" {
+  description = "Build command used by App Platform for the frontend"
+  type        = string
+  default     = "npm ci && npm run build"
+}

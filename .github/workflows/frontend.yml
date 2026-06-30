@@ -1,5 +1,8 @@
 name: Frontend CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ "main" ]
@@ -89,19 +92,20 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
 
     steps:
-      - name: Wait for app to be ready
-        run: sleep 30
-
       - name: Check frontend root endpoint
         env:
           APP_URL: ${{ needs.deploy.outputs.app_url }}
         run: |
-          HTTP_STATUS=$(curl --silent --output /dev/null --write-out "%{http_code}" \
-            --retry 5 --retry-delay 10 --retry-connrefused \
-            "${APP_URL}/")
-          echo "HTTP status: $HTTP_STATUS"
-          if [ "$HTTP_STATUS" -ne 200 ]; then
-            echo "Smoke test failed: expected HTTP 200 but got $HTTP_STATUS"
-            exit 1
-          fi
-          echo "Smoke test passed."
+          ATTEMPTS=12
+          DELAY=10
+          for i in $(seq 1 "$ATTEMPTS"); do
+            HTTP_STATUS=$(curl --silent --output /dev/null --write-out "%{http_code}" "${APP_URL}/")
+            echo "Attempt $i/$ATTEMPTS -> HTTP status: $HTTP_STATUS"
+            if [ "$HTTP_STATUS" -eq 200 ]; then
+              echo "Smoke test passed."
+              exit 0
+            fi
+            sleep "$DELAY"
+          done
+          echo "Smoke test failed: expected HTTP 200 but got $HTTP_STATUS"
+          exit 1

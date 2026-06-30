@@ -34,11 +34,11 @@ resource "digitalocean_app" "voleyon_frontend" {
     region = var.region
 
     static_site {
-      name         = "frontend"
-      source_dir   = "frontend"
-      build_command = "npm ci && npm run build"
-      output_dir   = "dist"
-      index_document = "index.html"
+      name              = "frontend"
+      source_dir        = var.frontend_source_dir
+      build_command     = var.frontend_build_command
+      output_dir        = "dist"
+      index_document    = "index.html"
       catchall_document = "index.html"
 
       github {
