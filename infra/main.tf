@@ -48,6 +48,50 @@ resource "digitalocean_app" "voleyon_backend" {
       production = false
     }
 
+    # Run database migrations before each new deployment
+    job {
+      name               = "migrate"
+      kind               = "PRE_DEPLOY"
+      instance_count     = 1
+      instance_size_slug = "apps-s-1vcpu-0.5gb"
+      source_dir         = "backend"
+      run_command        = "python manage.py migrate --noinput"
+
+      github {
+        repo           = "sergiowalls/VoleyOn"
+        branch         = "main"
+        deploy_on_push = false
+      }
+
+      # Needs the same database env vars as the service
+      env {
+        key   = "DB_NAME"
+        value = "$${db.DATABASE}"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "DB_USER"
+        value = "$${db.USERNAME}"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "DB_PASSWORD"
+        value = "$${db.PASSWORD}"
+        type  = "SECRET"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "DB_HOST"
+        value = "$${db.HOSTNAME}"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "DB_PORT"
+        value = "$${db.PORT}"
+        scope = "RUN_TIME"
+      }
+    }
+
     service {
       name               = "backend"
       environment_slug   = "python"
@@ -56,7 +100,7 @@ resource "digitalocean_app" "voleyon_backend" {
 
       source_dir    = "backend"
       build_command = "pip install pipenv && pipenv install --deploy && python manage.py collectstatic --noinput"
-      run_command   = "gunicorn --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 voleyon.asgi:application"
+      run_command   = "gunicorn --worker-class uvicorn.workers.UvicornWorker --workers 2 --bind 0.0.0.0:8080 voleyon.asgi:application"
       http_port     = 8080
 
       github {

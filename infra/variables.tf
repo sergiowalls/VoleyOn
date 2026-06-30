@@ -19,7 +19,7 @@ variable "allowed_hosts" {
 variable "region" {
   description = "DigitalOcean region slug for the App Platform"
   type        = string
-  default     = "nyc"
+  default     = "nyc3"
 }
 
 variable "spaces_access_key" {
