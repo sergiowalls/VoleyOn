@@ -10,13 +10,13 @@ terraform {
 
   # Remote state using DigitalOcean Spaces (S3-compatible).
   # Before using this backend, create a Space named "voleyon-tf-state" in the
-  # nyc3 region and generate a Spaces access key in the DigitalOcean control
+  # lon1 region and generate a Spaces access key in the DigitalOcean control
   # panel. Pass the credentials via environment variables:
   #   AWS_ACCESS_KEY_ID     → Spaces access key
   #   AWS_SECRET_ACCESS_KEY → Spaces secret key
   backend "s3" {
     endpoints = {
-      s3 = "https://nyc3.digitaloceanspaces.com"
+      s3 = "https://lon1.digitaloceanspaces.com"
     }
     bucket = "voleyon-tf-state"
     key    = "backend/terraform.tfstate"

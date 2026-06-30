@@ -19,7 +19,7 @@ variable "allowed_hosts" {
 variable "region" {
   description = "DigitalOcean region slug for the App Platform"
   type        = string
-  default     = "nyc3"
+  default     = "lon1"
 }
 
 variable "gunicorn_workers" {
@@ -27,6 +27,8 @@ variable "gunicorn_workers" {
   type        = number
   default     = 2
 }
+
+variable "spaces_access_key" {
   description = "DigitalOcean Spaces access key (for Terraform state backend)"
   type        = string
   sensitive   = true
