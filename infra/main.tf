@@ -99,8 +99,8 @@ resource "digitalocean_app" "voleyon_backend" {
       instance_size_slug = "apps-s-1vcpu-0.5gb" # Basic XXS – 1 vCPU / 512 MB
 
       source_dir    = "backend"
-      build_command = "pip install pipenv && pipenv install --deploy && python manage.py collectstatic --noinput"
-      run_command   = "gunicorn --worker-class uvicorn.workers.UvicornWorker --workers 2 --bind 0.0.0.0:8080 voleyon.asgi:application"
+      build_command = "pip install --quiet pipenv && pipenv install --deploy && python manage.py collectstatic --noinput"
+      run_command   = "gunicorn --worker-class uvicorn.workers.UvicornWorker --workers ${var.gunicorn_workers} --bind 0.0.0.0:8080 voleyon.asgi:application"
       http_port     = 8080
 
       github {

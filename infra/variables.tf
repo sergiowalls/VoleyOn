@@ -22,7 +22,11 @@ variable "region" {
   default     = "nyc3"
 }
 
-variable "spaces_access_key" {
+variable "gunicorn_workers" {
+  description = "Number of Gunicorn worker processes. Tune based on instance size (recommended: 2 × vCPUs + 1)."
+  type        = number
+  default     = 2
+}
   description = "DigitalOcean Spaces access key (for Terraform state backend)"
   type        = string
   sensitive   = true
