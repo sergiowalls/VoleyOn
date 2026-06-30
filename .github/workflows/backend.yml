@@ -5,11 +5,13 @@ on:
     branches: [ "main" ]
     paths:
     - backend/**
+    - infra/**
     - .github/workflows/backend.yml
   pull_request:
     branches: [ "**" ]
     paths:
     - backend/**
+    - infra/**
     - .github/workflows/backend.yml
   workflow_dispatch:
 
@@ -38,3 +40,44 @@ jobs:
       run: pipenv install --deploy
     - name: Run Tests
       run: pipenv run test
+
+  deploy:
+    name: Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    defaults:
+      run:
+        working-directory: ./infra
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "~1.5"
+
+    - name: Terraform Init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+      run: terraform init
+
+    - name: Terraform Plan
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        TF_VAR_django_secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
+        TF_VAR_allowed_hosts: ${{ secrets.ALLOWED_HOSTS }}
+      run: terraform plan -out=tfplan
+
+    - name: Terraform Apply
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        TF_VAR_django_secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
+        TF_VAR_allowed_hosts: ${{ secrets.ALLOWED_HOSTS }}
+      run: terraform apply -auto-approve tfplan
