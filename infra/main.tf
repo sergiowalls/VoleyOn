@@ -31,7 +31,56 @@ terraform {
 }
 
 provider "digitalocean" {
-  token = var.do_token
+  token             = var.do_token
+  spaces_access_id  = var.spaces_access_key
+  spaces_secret_key = var.spaces_secret_key
+}
+
+# ---------------------------------------------------------------------------
+# DigitalOcean Spaces bucket for tournament poster images
+# ---------------------------------------------------------------------------
+
+resource "digitalocean_spaces_bucket" "tournament_images" {
+  name   = var.images_bucket_name
+  region = var.images_bucket_region
+  acl    = "public-read"
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3600
+  }
+}
+
+resource "digitalocean_spaces_bucket_cors_configuration" "tournament_images" {
+  bucket = digitalocean_spaces_bucket.tournament_images.name
+  region = digitalocean_spaces_bucket.tournament_images.region
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD", "PUT", "POST", "DELETE"]
+    allowed_origins = ["https://voleyon.com", "http://localhost:5173"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
+}
+
+resource "digitalocean_spaces_bucket_policy" "tournament_images_public_read" {
+  bucket = digitalocean_spaces_bucket.tournament_images.name
+  region = digitalocean_spaces_bucket.tournament_images.region
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "arn:aws:s3:::${var.images_bucket_name}/*"
+      }
+    ]
+  })
 }
 
 resource "digitalocean_app" "voleyon_backend" {
@@ -152,6 +201,40 @@ resource "digitalocean_app" "voleyon_backend" {
       env {
         key   = "DB_PORT"
         value = "$${db.PORT}"
+        scope = "RUN_TIME"
+      }
+
+      # DigitalOcean Spaces – tournament poster image storage
+      env {
+        key   = "SPACES_ACCESS_KEY_ID"
+        value = var.spaces_access_key
+        type  = "SECRET"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "SPACES_SECRET_ACCESS_KEY"
+        value = var.spaces_secret_key
+        type  = "SECRET"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "SPACES_BUCKET_NAME"
+        value = var.images_bucket_name
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "SPACES_REGION"
+        value = var.images_bucket_region
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "SPACES_ENDPOINT_URL"
+        value = "https://${var.images_bucket_region}.digitaloceanspaces.com"
+        scope = "RUN_TIME"
+      }
+      env {
+        key   = "SPACES_CDN_ENDPOINT"
+        value = "https://${var.images_bucket_name}.${var.images_bucket_region}.cdn.digitaloceanspaces.com"
         scope = "RUN_TIME"
       }
     }
