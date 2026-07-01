@@ -43,14 +43,7 @@ provider "digitalocean" {
 resource "digitalocean_spaces_bucket" "tournament_images" {
   name   = var.images_bucket_name
   region = var.images_bucket_region
-  acl    = "public-read"
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["GET", "HEAD"]
-    allowed_origins = ["*"]
-    max_age_seconds = 3600
-  }
+  acl    = "private"
 }
 
 resource "digitalocean_spaces_bucket_cors_configuration" "tournament_images" {
