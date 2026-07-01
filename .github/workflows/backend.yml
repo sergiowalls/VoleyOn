@@ -5,11 +5,13 @@ on:
     branches: [ "main" ]
     paths:
     - backend/**
+    - infra/**
     - .github/workflows/backend.yml
   pull_request:
     branches: [ "**" ]
     paths:
     - backend/**
+    - infra/**
     - .github/workflows/backend.yml
   workflow_dispatch:
 
@@ -38,3 +40,80 @@ jobs:
       run: pipenv install --deploy
     - name: Run Tests
       run: pipenv run test
+
+  deploy:
+    name: Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    outputs:
+      app_url: ${{ steps.app_url.outputs.url }}
+    defaults:
+      run:
+        working-directory: ./infra
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.9.0"
+
+    - name: Terraform Init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+      run: terraform init
+
+    - name: Terraform Plan
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        TF_VAR_django_secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
+        TF_VAR_allowed_hosts: ${{ secrets.ALLOWED_HOSTS }}
+      run: terraform plan -out=tfplan
+
+    - name: Terraform Apply
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        TF_VAR_django_secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
+        TF_VAR_allowed_hosts: ${{ secrets.ALLOWED_HOSTS }}
+      run: terraform apply -auto-approve tfplan
+
+    - name: Get app URL
+      id: app_url
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+        TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        TF_VAR_django_secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
+        TF_VAR_allowed_hosts: ${{ secrets.ALLOWED_HOSTS }}
+      run: echo "url=$(terraform output -raw app_url)" >> "$GITHUB_OUTPUT"
+
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
+    steps:
+    - name: Wait for app to be ready
+      run: sleep 30
+
+    - name: Check /tournaments/ endpoint
+      env:
+        APP_URL: ${{ needs.deploy.outputs.app_url }}
+      run: |
+        HTTP_STATUS=$(curl --silent --output /dev/null --write-out "%{http_code}" \
+          --retry 5 --retry-delay 10 --retry-connrefused \
+          "${APP_URL}/tournaments/")
+        echo "HTTP status: $HTTP_STATUS"
+        if [ "$HTTP_STATUS" -ne 200 ]; then
+          echo "Smoke test failed: expected HTTP 200 but got $HTTP_STATUS"
+          exit 1
+        fi
+        echo "Smoke test passed."
