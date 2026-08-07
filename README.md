@@ -62,3 +62,15 @@ pipenv run runserver
 
 Puedes acceder a la API en `http://localhost:8000/` y a la interfaz de administración de Django en
 `http://localhost:8000/admin/`.
+
+## Despliegue de frontend con Terraform
+
+El workflow `.github/workflows/frontend.yml` incluye un despliegue automático del frontend en DigitalOcean App
+Platform usando Terraform desde el directorio `infra-frontend/` cuando hay cambios en `main`.
+
+Secrets requeridos en GitHub:
+
+- `DIGITALOCEAN_ACCESS_TOKEN`
+- `SPACES_ACCESS_KEY_ID`
+- `SPACES_SECRET_ACCESS_KEY`
+- `FRONTEND_API_URL` (valor para `VITE_VOLEYON_API_URL` en build)
