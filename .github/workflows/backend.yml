@@ -22,13 +22,13 @@ jobs:
         working-directory: ./backend
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Start PostgreSQL
       run: |
         sudo systemctl start postgresql.service
         sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: 3.13
         cache: pipenv
