@@ -1,5 +1,5 @@
 import TournamentCard from "./TournamentCard.tsx";
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import {
     Autocomplete,
     Box,
@@ -90,7 +90,7 @@ const Tournaments = () => {
                     label="Provincia"
                     slotProps={{
                         htmlInput: {
-                            ...params.inputProps,
+                            ...params.slotProps.htmlInput,
                         },
                     }}
                 />
