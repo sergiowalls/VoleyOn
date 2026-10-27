@@ -1,5 +1,5 @@
 import { useLocalStorage } from "./useLocalStorage.ts";
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { Autocomplete, Container, TextField } from "@mui/material";
 import { Provinces } from "./Provinces.ts";
 import Typography from "@mui/material/Typography";
@@ -30,7 +30,7 @@ export default function Home() {
                      style={{position: 'relative', left: '50%', transform: 'translate(-50%,0)', height: '330px'}} />
             </picture>
             <Container>
-                <Grid container spacing={2} sx={{padding: 2}} justifyContent="center">
+                <Grid container spacing={2} sx={{padding: 2, justifyContent: "center"}}>
                     <Typography variant="body1" sx={{display: 'block', lineHeight: '2'}}>
                         Buscar torneos en...
                     </Typography>
@@ -41,7 +41,7 @@ export default function Home() {
                             placeholder="tu provincia"
                             slotProps={{
                                 htmlInput: {
-                                    ...params.inputProps,
+                                    ...params.slotProps.htmlInput,
                                 },
                             }}
                         />
